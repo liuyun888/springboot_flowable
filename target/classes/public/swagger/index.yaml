@@ -1,0 +1,77 @@
+#必要字段！Swagger规范版本，必须填2.0，否则该YAML将不能用于Swagger其他组件
+swagger: '2.0'
+#必要字段！描述API接口信息的元数据
+info:
+  #接口文档的描述
+  description: swagger说明文档，让一切都变得如此简单。
+  #版本号
+  version: 1.0.0
+  #接口标题
+  title: boot-demo
+#Swagger会提供测试用例，host指定测试时的主机名，如果没有指定就是当前主机,可以指定端口．
+host: localhost:8080
+#定义的api的前缀，必须已/开头,测试用例的主机则为:host＋bashPath
+#basePath: /boot-flowable
+
+#指定调用接口的协议，必须是:"http", "https", "ws", "wss"．默认是http.-表示是个数组元素，即schemes接受一个数组参数
+schemes:
+  - http
+  - https
+
+#对应与http协议头request的Accept，调用者可接受类型,默认是*/*,定义的类型必须是http协议定义的 Mime Types,RestfulAPI一般定义成application/json
+#这两个是对所有接口的全局设置，在细化的接口中是还可以对应这两个属性来覆盖全局属性
+produces:
+  - application/json
+
+#定义接口数据
+paths:
+  /myInfo:
+    #必要字段!定义HTTP操作方法，必须是http协议定义的方法
+    get:
+      tags:
+        - MyInfo 用户信息
+      #接口概要
+      summary: 用户信息
+      #接口描述
+      description: 查询出所有用户的所有信息，用户名，别名
+      parameters:
+        - name: id
+          description: 用户ID
+          in: query
+          type: integer
+          required: true
+      #返回值描述，必要自动
+      responses:
+        #返回的http状态码
+        200:
+          description: 所有用户信息或者用户的集合信息
+          #描述返回值
+          schema:
+            #返回值格式，可选的有array,integer,string,boolean
+            $ref: '#/definitions/myInfo'
+
+#定义数据模型
+definitions:
+  R:
+    type: object
+    properties:
+      code:
+        description: 状态码 0：成功  非0：失败
+        type: integer
+        format: int32
+      msg:
+        description: 失败原因
+        type: string
+  myInfo:
+    type: object
+    properties:
+      id:
+        description: ID
+        type: integer
+        format: int32
+      age:
+        description: 年龄
+        type: integer
+      name:
+        description: 姓名
+        type: string

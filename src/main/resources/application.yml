@@ -1,0 +1,23 @@
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/test?serverTimezone=UTC
+    username: root
+    password: aaaaaa
+#mybatis
+mybatis-plus:
+  mapper-locations:
+    - classpath:mybatis/mappers/*.xml
+  typeAliasesPackage: com.honghh.bootfirst.entity
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    logImpl: org.apache.ibatis.logging.stdout.StdOutImpl
+    local-cache-scope: statement
+
+flowable:
+  #关闭定时任务JOB
+  async-executor-activate: false
+#  将databaseSchemaUpdate设置为true。当Flowable发现库与数据库表结构不一致时，会自动将数据库表结构升级至新版本。
+  database-schema-update: true
